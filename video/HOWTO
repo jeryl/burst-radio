@@ -1,0 +1,7 @@
+1) compile and install nginx with the nginx-rtmp module
+2) cp the nginx.conf (/usr/local/nginx/conf/nginx.conf)
+3) install OBS studio 
+4) Open settings and browse to Stream and set the Stream type to "Custom Streaming Server"
+5) Set stream URL to `rtmp://<hostname where nginx is installed>/show`
+4) Set stream_key to `radio`
+5) copy the html in `view.html` somewhere we want to show video
