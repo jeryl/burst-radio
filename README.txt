@@ -36,7 +36,7 @@ Running the server for development
 Running the server for realz
 ----------------------------
 
-- gunicorn --paste development.ini -b :80
+- gunicorn --paste development.ini -b :8080
 
 
 Where stuff lives
