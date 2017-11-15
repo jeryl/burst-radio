@@ -21,6 +21,9 @@
     <link href="{{ request.static_url('burstradio:static/burstradio.css') }}"
           rel="stylesheet">
 
+    <!--tlk.io script-->
+    <script async src="https://tlk.io/embed.js" type="text/javascript"></script>
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"
@@ -41,7 +44,7 @@
 <h2>Now playing</h2>
 <p>TODO: Streaming client here</p>
 <p>TODO: Current program information here</p>
-<p>TODO: chat here</p>
+<div id="tlkio" data-channel="burstradio" data-theme="" data-custom-css="{{ request.static_url('burstradio:static/tlkio.css') }}"></div>
 
 <h2>On deck for Hackathon</h2>
 <p>TODO: All program information here</p>
