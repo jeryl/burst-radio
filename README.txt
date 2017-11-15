@@ -42,10 +42,18 @@ Running the server for realz
 Where stuff lives
 -----------------
 
+Of note:
+- burstradio.views.home: endpoint for our only page
+- burstradio/templates/home.jinja2:  jinja template for our only page
+- burstradio/static/home.js: our JS file (can add more if needed)
+- burstradio/static/burstradio.css: our CSS file
+
+Everything else:
 - burstradio: everything
 - burstradio.models: SQLAlchemy model definitions
-- burstradio.scripts: initialization / command line scripts
+- burstradio.scripts.initializedb: if you add a model to .models, you should
+  also import it in this script so that the table gets created on script exec
 - burstradio.static: assets including images, CSS, JS
 - burstradio.templates: Jinja templates for server-side HTML rendering
 - burstradio.views: code for HTTP endpoints
-- burstradio.routes.py: enumerates all webapp routes from paths to named views
+- burstradio.routes: enumerates all webapp routes from paths to named views
