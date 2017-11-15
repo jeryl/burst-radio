@@ -1,5 +1,6 @@
 venv/
 burstradio.egg-info/
 .idea/
+*.py[co]
 burstradio.sqlite
 
