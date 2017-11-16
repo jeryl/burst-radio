@@ -10,7 +10,7 @@ from ..models import MyModel
 def home(request):
     return {
         'chat_channel': 'burstradio',
-        'stream_url': 'http://secure.live-streams.nl:80/opus.opus',
+        'stream_url': 'http://burstradio.yelpcorp.com:8000/burst',
     }
 
 
