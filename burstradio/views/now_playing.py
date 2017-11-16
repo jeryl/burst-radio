@@ -46,15 +46,12 @@ def now_playing(request):
         dict(artist=current_show.artist, name=current_show.name, description=current_show.description)
         if current_show
         else {
-            'artist': 'ruairi',
-            'name': 'Awful Show',
-            'description': 'Not worth listening to. Don\'t bother',
         }
     )
     return {
         'playing_now': playing_now,
         'playing_next': {
-            'artist': 'jcontemp',
+            'artist': 'lol',
             'name': 'Really Cool Show',
             'description': 'An analysis of all music ever.',
         },

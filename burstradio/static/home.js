@@ -4,6 +4,9 @@ function refreshNowPlaying() {
         function(data) {
             var lastArtist = $('.js-now-playing-artist').text();
             var currentArtist = data['playing_now']['artist'];
+            if (!currentArtist) {
+                return;
+            }
             $('.js-now-playing-title').text(data['playing_now']['name']);
             $('.js-now-playing-artist').text(currentArtist);
             $('.js-now-playing-description').text(data['playing_now']['description']);
