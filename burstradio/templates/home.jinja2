@@ -18,6 +18,8 @@
           rel="stylesheet">
 
     <!-- Custom styles -->
+    <link href="{{ request.static_url('burstradio:static/bootstrap.min.css') }}"
+          rel="stylesheet">
     <link href="{{ request.static_url('burstradio:static/burstradio.css') }}"
           rel="stylesheet">
 
@@ -36,42 +38,57 @@
 </head>
 
 <body>
+    <div class="container">
+        <div class="panel panel-default header">
+            <div class="panel-body">
+                <div class="row">
+                    <h1>Burst Radio</h1>
+                    <audio class="stream" controls loop autoplay width="100%">
+                        <source src="{{ stream_url }}" type="audio/ogg; codecs=&quot;opus&quot;">
+                    </audio>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default content">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 info">.
+                        <h2>Now Playing</h2>
+                        <h3 class="js-now-playing-title">some shit</h3>
+                        <h4 class="js-now-playing-artist">ruairi</h4>
+                        <p class="js-now-playing-description">Man, I dunno.</p>
+                    </div>
+                    <div class="col-md-6 chat">
+                        <div id="tlkio" data-channel="burstradio" data-theme="" data-custom-css="{{ request.static_url('burstradio:static/tlkio.css') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default footer">
+            <div class="panel-body">
+                <div class="row">
+                    Burst Radio - Hackathon 24
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"
+            integrity="sha384-aBL3Lzi6c9LNDGvpHkZrrm3ZVsIwohDD7CDozL0pk8FwCrfmV7H9w8j3L7ikEv6h"
+            crossorigin="anonymous"></script>
+    <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"
+            integrity="sha384-s1ITto93iSMDxlp/79qhWHi+LsIi9Gx6yL+cOKDuymvihkfol83TYbLbOw+W/wv4"
+            crossorigin="anonymous"></script>
 
-<h1>Burst Radio</h1>
-<!-- this is just here to show JS works; we can remove it -->
-<p id="placeholder"></p>
+    <!-- Our project's JS -->
+    <script src="{{ request.static_url('burstradio:static/home.js') }}"></script>
 
-<h2>Now playing</h2>
-<audio id="stream" controls loop autoplay width="640">
-    <source src="http://secure.live-streams.nl:80/opus.opus" type="audio/ogg; codecs=&quot;opus&quot;">
-</audio> 
-
-<p>TODO: Current program information here</p>
-<div id="tlkio" data-channel="burstradio" data-theme="" data-custom-css="{{ request.static_url('burstradio:static/tlkio.css') }}"></div>
-
-<h2>On deck for Hackathon</h2>
-<p>TODO: All program information here</p>
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"
-        integrity="sha384-aBL3Lzi6c9LNDGvpHkZrrm3ZVsIwohDD7CDozL0pk8FwCrfmV7H9w8j3L7ikEv6h"
-        crossorigin="anonymous"></script>
-<script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"
-        integrity="sha384-s1ITto93iSMDxlp/79qhWHi+LsIi9Gx6yL+cOKDuymvihkfol83TYbLbOw+W/wv4"
-        crossorigin="anonymous"></script>
-
-<!-- Our project's JS -->
-<script src="{{ request.static_url('burstradio:static/home.js') }}"></script>
-
-<script>
-
-// entry point for our shit
-initHome();
-
-</script>
+    <script>
+        // entry point for our shit
+        initHome();
+    </script>
 
 </body>
 </html>
