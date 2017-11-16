@@ -59,7 +59,7 @@
                         <p class="js-now-playing-description">Man, I dunno.</p>
                     </div>
                     <div class="col-md-6 chat">
-                        <div id="tlkio" data-channel="burstradio" data-theme="" data-custom-css="{{ request.static_url('burstradio:static/tlkio.css') }}"></div>
+                        <div id="tlkio" data-channel="{{ chat_channel }}" data-theme="" data-custom-css="{{ request.static_url('burstradio:static/tlkio.css') }}"></div>
                     </div>
                 </div>
             </div>

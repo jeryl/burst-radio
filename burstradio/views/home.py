@@ -8,14 +8,8 @@ from ..models import MyModel
 
 @view_config(route_name='home', renderer='../templates/home.jinja2')
 def home(request):
-    try:
-        query = request.dbsession.query(MyModel)
-        one = query.filter(MyModel.name == 'one').first()
-    except DBAPIError:
-        return Response(db_err_msg, content_type='text/plain', status=500)
     return {
-        'one': one,
-        'project': 'burstradio',
+        'chat_channel': 'burstradio',
         'stream_url': 'http://secure.live-streams.nl:80/opus.opus',
     }
 
