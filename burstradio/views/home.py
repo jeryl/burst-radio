@@ -3,7 +3,19 @@ from pyramid.view import view_config
 
 from sqlalchemy.exc import DBAPIError
 
-from ..models import MyModel
+from ..models import Show
+
+
+def fetch_shows(session):
+    shows = session.query(Show).all()
+    for show in shows:
+        show.formatted_time = show.time.strftime("%H:%M")
+        show.artists = (
+            show.artist.split("/")
+            if show.artist
+            else []
+        )
+    return shows
 
 
 @view_config(route_name='home', renderer='../templates/home.jinja2')
@@ -11,6 +23,7 @@ def home(request):
     return {
         'chat_channel': 'burstradio',
         'stream_url': 'http://burstradio.yelpcorp.com:8000/burst',
+        'shows': fetch_shows(request.dbsession),
     }
 
 

@@ -81,6 +81,40 @@
                 </div>
             </div>
         </div>
+        <div class="panel panel-default content">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 info">.
+                        <h2>Shows for this Hackathon</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 info">.
+                        {% for show in shows %}
+                            {% if not show.artists %}
+                                <hr>
+                                <div style="color: #aaaaaa">
+                            {% endif %}
+                            <h3 class="js-show-title">{{ show.formatted_time }} - {{ show.name }}</h3>
+
+                            {% if show.artists %}
+                                {% for artist in show.artists %}
+                                <img style="width: 100px; height: 100px" src="{{ request.static_url('burstradio:static/photos/%s.jpg' % (artist,)) }}">
+                                {% endfor %}
+                            {% endif %}
+
+                            <h4 class="js-show-artist">{{ show.artist }}</h4>
+                            <p class="show-description">{{ show.description }}</p>
+
+                            {% if not show.artists %}
+                                </div>
+                            <hr>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="panel panel-default footer">
             <div class="panel-body">
                 <div class="row">

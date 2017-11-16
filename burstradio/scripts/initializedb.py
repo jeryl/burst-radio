@@ -14,8 +14,10 @@ from ..models import (
     get_engine,
     get_session_factory,
     get_tm_session,
-    )
-from ..models import MyModel
+)
+from ..models import (
+    Show,
+)
 
 
 def usage(argv):
@@ -38,8 +40,13 @@ def main(argv=sys.argv):
 
     session_factory = get_session_factory(engine)
 
+    # purge database
     with transaction.manager:
         dbsession = get_tm_session(session_factory, transaction.manager)
-
-        model = MyModel(name='one', value=1)
-        dbsession.add(model)
+        dbsession.query(Show).delete()
+    #
+    # with transaction.manager:
+    #     dbsession = get_tm_session(session_factory, transaction.manager)
+    #
+    #     model = MyModel(name='one', value=1)
+    #     dbsession.add(model)

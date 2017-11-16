@@ -3,4 +3,5 @@ burstradio.egg-info/
 .idea/
 *.py[co]
 burstradio.sqlite
+.DS_Store
 

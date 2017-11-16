@@ -39,6 +39,17 @@ Running the server for realz
 - gunicorn --paste development.ini -b :8080
 
 
+Updating the database with Show information
+-------------------------------------------
+
+- export the database-friendly tab of the program spreadsheet as CSV
+- re-create the tables (see above) to wipe the database
+- change to the home directory
+- python burstradio/scripts/load_shows.py program.csv development.ini
+- put photos in filename format username.jpg into burstradio/static/photos
+- restart the server
+
+
 Where stuff lives
 -----------------
 
