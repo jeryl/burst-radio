@@ -44,18 +44,20 @@
                 <div class="row">
                     <div class="col-md-6 title">.
                         <h1>Burst Radio</h1>
+                        <img src="{{ request.static_url('burstradio:static/burstradio.png') }}" width="303" height="169" />
                         <audio class="stream" controls loop autoplay width="100%">
                             <source src="{{ stream_url }}" type="audio/mp3;">
                         </audio>
+
                     </div>
                     <div class="col-md-6 info">.
                         <h2>Now Playing</h2>
-                        <h3 class="js-now-playing-title">some shit</h3>
+                        <h3 class="js-now-playing-title"></h3>
                         <span class="js-now-playing-images">
                             <!-- placeholder for image injection -->
                         </span>
-                        <h4 class="js-now-playing-artist">ruairi</h4>
-                        <p class="js-now-playing-description">Man, I dunno.</p>
+                        <h4 class="js-now-playing-artist"></h4>
+                        <p class="js-now-playing-description"></p>
                     </div>
                 </div>
             </div>
