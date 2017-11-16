@@ -35,3 +35,12 @@ def transaction_session():
     with transaction.manager:
         dbsession = get_tm_session(session_factory, transaction.manager)
         yield dbsession
+
+
+from sqlalchemy.orm import (
+    scoped_session,
+    sessionmaker,
+    )
+
+# for use when in pyramid stuff
+DBSession = scoped_session(sessionmaker())

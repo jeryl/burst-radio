@@ -7,8 +7,9 @@ from ..models import Show
 
 
 def fetch_shows(session):
-    shows = session.query(Show).all()
+    shows = session.query(Show).order_by(Show.time, Show.id).all()
     for show in shows:
+        # when models pose for presentation
         show.formatted_time = show.time.strftime("%H:%M")
         show.artists = (
             show.artist.split("/")
@@ -18,13 +19,23 @@ def fetch_shows(session):
     return shows
 
 
-@view_config(route_name='home', renderer='../templates/home.jinja2')
-def home(request):
+def home_data(request, admin=False):
     return {
         'chat_channel': 'burstradio',
         'stream_url': 'http://burstradio.yelpcorp.com:8000/burst',
         'shows': fetch_shows(request.dbsession),
+        'admin': admin,
     }
+
+
+@view_config(route_name='home', renderer='../templates/home.jinja2')
+def home(request):
+    return home_data(request)
+
+
+@view_config(route_name='selecta', renderer='../templates/home.jinja2')
+def admin(request):
+    return home_data(request, admin=True)
 
 
 db_err_msg = """\

@@ -51,6 +51,9 @@
                     <div class="col-md-6 info">.
                         <h2>Now Playing</h2>
                         <h3 class="js-now-playing-title">some shit</h3>
+                        <span class="js-now-playing-images">
+                            <!-- placeholder for image injection -->
+                        </span>
                         <h4 class="js-now-playing-artist">ruairi</h4>
                         <p class="js-now-playing-description">Man, I dunno.</p>
                     </div>
@@ -99,12 +102,19 @@
 
                             {% if show.artists %}
                                 {% for artist in show.artists %}
-                                <img style="width: 100px; height: 100px" src="{{ request.static_url('burstradio:static/photos/%s.jpg' % (artist,)) }}">
+                                <img style="width: 100px; height: 100px" src="{{ request.static_url('burstradio:static/photos/%s.jpg' % (artist,)) }}" />
                                 {% endfor %}
                             {% endif %}
 
                             <h4 class="js-show-artist">{{ show.artist }}</h4>
                             <p class="show-description">{{ show.description }}</p>
+
+                            {% if admin %}
+                                <form action="/current_show" method="post">
+                                    <input type="hidden" name="show_id" value="{{ show.id }}" />
+                                    <input class="btn btn-info" type="submit" value="Now playing" />
+                                </form>
+                            {% endif %}
 
                             {% if not show.artists %}
                                 </div>

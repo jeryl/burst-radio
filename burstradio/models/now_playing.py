@@ -9,13 +9,12 @@ from sqlalchemy import (
 from .meta import Base
 
 
-class Show(Base):
-    __tablename__ = 'show'
+class NowPlaying(Base):
+    """LOL this bullshit table"""
+    __tablename__ = 'now_playing'
     id = Column(Integer, primary_key=True)
-    name = Column(Text)
-    description = Column(Text)
-    artist = Column(Text)
     time = Column(DateTime)
+    show_id = Column(Integer)
 
 
-Index('show_time', Show.time)
+Index('now_playing_time', NowPlaying.time)

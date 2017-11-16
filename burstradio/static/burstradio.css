@@ -25,3 +25,8 @@
 #video {
     object-fit: cover;
 }
+
+.now-playing-image {
+    width: 100px;
+    height: 100px;
+}

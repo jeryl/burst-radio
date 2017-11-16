@@ -17,6 +17,7 @@ from ..models import (
 )
 from ..models import (
     Show,
+    NowPlaying,
 )
 
 
@@ -44,6 +45,8 @@ def main(argv=sys.argv):
     with transaction.manager:
         dbsession = get_tm_session(session_factory, transaction.manager)
         dbsession.query(Show).delete()
+        dbsession.query(NowPlaying).delete()
+
     #
     # with transaction.manager:
     #     dbsession = get_tm_session(session_factory, transaction.manager)

@@ -4,4 +4,4 @@ burstradio.egg-info/
 *.py[co]
 burstradio.sqlite
 .DS_Store
-
+burstradio/static/photos/
