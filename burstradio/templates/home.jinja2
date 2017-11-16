@@ -42,7 +42,10 @@
 <p id="placeholder"></p>
 
 <h2>Now playing</h2>
-<p>TODO: Streaming client here</p>
+<audio id="stream" controls loop autoplay width="640">
+    <source src="http://secure.live-streams.nl:80/opus.opus" type="audio/ogg; codecs=&quot;opus&quot;">
+</audio> 
+
 <p>TODO: Current program information here</p>
 <div id="tlkio" data-channel="burstradio" data-theme="" data-custom-css="{{ request.static_url('burstradio:static/tlkio.css') }}"></div>
 
