@@ -42,21 +42,38 @@
         <div class="panel panel-default header">
             <div class="panel-body">
                 <div class="row">
-                    <h1>Burst Radio</h1>
-                    <audio class="stream" controls loop autoplay width="100%">
-                        <source src="{{ stream_url }}" type="audio/ogg; codecs=&quot;opus&quot;">
-                    </audio>
+                    <div class="col-md-6 title">.
+                        <h1>Burst Radio</h1>
+                        <audio class="stream" controls loop autoplay width="100%">
+                            <source src="{{ stream_url }}" type="audio/ogg; codecs=&quot;opus&quot;">
+                        </audio>
+                    </div>
+                    <div class="col-md-6 info">.
+                        <h2>Now Playing</h2>
+                        <h3 class="js-now-playing-title">some shit</h3>
+                        <h4 class="js-now-playing-artist">ruairi</h4>
+                        <p class="js-now-playing-description">Man, I dunno.</p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="panel panel-default content">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-6 info">.
-                        <h2>Now Playing</h2>
-                        <h3 class="js-now-playing-title">some shit</h3>
-                        <h4 class="js-now-playing-artist">ruairi</h4>
-                        <p class="js-now-playing-description">Man, I dunno.</p>
+                    <div class="col-md-6 video-player">
+                        <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+                        <video id="video" width="100%" height="auto"></video>
+                        <script>
+                          if(Hls.isSupported()) {
+                            var video = document.getElementById('video');
+                            var hls = new Hls();
+                            hls.loadSource('http://burstradio1-uswest2adevc:8080/hls/radio.m3u8');
+                            hls.attachMedia(video);
+                            hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                              video.play();
+                          });
+                         }
+                        </script>
                     </div>
                     <div class="col-md-6 chat">
                         <div id="tlkio" data-channel="{{ chat_channel }}" data-theme="" data-custom-css="{{ request.static_url('burstradio:static/tlkio.css') }}"></div>

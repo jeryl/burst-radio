@@ -17,3 +17,11 @@
 .info {
     text-align: center;
 }
+
+.video-player {
+    text-align: center;
+}
+
+#video {
+    object-fit: cover;
+}
