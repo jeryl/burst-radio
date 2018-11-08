@@ -47,6 +47,12 @@ def run():
         row['artist']
         for row in data_loading.yield_program_csv_rows(args.program_csv)
     ])
+    for artist in list(artists):
+        if '/' in artist:
+            artist_group = artist.split('/')
+            artists.remove(artist)
+            for subartist in artist_group:
+                artists.add(subartist)
     print(artists)
 
     artist_info_list = [
