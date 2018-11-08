@@ -14,17 +14,17 @@ from ..models import Show
 
 
 def fetch_all_shows(session):
-    shows = session.query(Show).order_by(Show.time.desc(), Show.id.desc()).all()
+    shows = session.query(Show).order_by(Show.time.asc(), Show.id.asc()).all()
     # Split shows into two parts: show all upcoming shows first, and then shows already completed.
     current_time = datetime.datetime.now()
-    next_show_index = 0
-    for next_show_index in range(len(shows)):
+    next_show_index = len(shows) - 1
+    for next_show_index in range(len(shows) - 1, 0, -1):
         show = shows[next_show_index]
         if show.time < current_time:
             # This is the next show
             break
-    upcoming_shows = shows[:next_show_index]
-    completed_shows = shows[next_show_index:]
+    upcoming_shows = shows[next_show_index:]
+    completed_shows = shows[:next_show_index]
     return upcoming_shows, completed_shows
 
 
