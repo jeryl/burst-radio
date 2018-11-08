@@ -72,7 +72,7 @@
                           if(Hls.isSupported()) {
                             var video = document.getElementById('video');
                             var hls = new Hls();
-                            hls.loadSource('http://burstradio1-uswest2adevc:8080/hls/radio.m3u8');
+                            hls.loadSource('http://burstradio.yelpcorp.com/video/radio.m3u8');
                             hls.attachMedia(video);
                             hls.on(Hls.Events.MANIFEST_PARSED,function() {
                               video.play();
