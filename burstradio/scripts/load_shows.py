@@ -31,14 +31,16 @@ def filter_dict_by_keys(dictionary, keys):
     return {key: value for key, value in dictionary.iteritems() if key in keys}
 
 
-def iso_to_datetime(val):
-    print(val)
+def iso_to_datetime(date, time):
+    print(date, time)
+    date_parts = [int(x) for x in date.split('-')]
+    time_parts = [int(x) for x in time.split(':')]
     return datetime.datetime(
-        int(val[0:4]), # %Y
-        int(val[5:7]), # %m
-        int(val[8:10]), # %d
-        int(val[11:13]), # %H
-        int(val[14:16]), # %M
+        date_parts[0], # %Y
+        date_parts[1], # %m
+        date_parts[2], # %d
+        time_parts[0], # %H
+        time_parts[1], # %M
         0, # %s
         0, # %f
     )
@@ -48,9 +50,8 @@ def load_row(row):
     for key, value in row.items():
         row[key] = unicode(value, "utf-8")
 
-    row['time'] = "%sT%s" % (row['date'], row['time'])
+    row['time'] = iso_to_datetime(row['date'], row['time'])
     del row['date']
-    row['time'] = iso_to_datetime(row['time'])
 
     with db.transaction_session() as session:
         show = Show(
