@@ -13,6 +13,20 @@ from ..models import NowPlaying
 from ..models import Show
 
 
+def fetch_all_shows(session):
+    shows = session.query(Show).order_by(Show.time.desc(), Show.id.desc()).all()
+    # Split shows into two parts: show all upcoming shows first, and then shows already completed.
+    current_time = datetime.datetime.now()
+    for next_show_index in range(len(shows)):
+        show = shows[next_show_index]
+        if show.time < current_time:
+            # This is the next show
+            break
+    upcoming_shows = shows[:next_show_index]
+    completed_shows = shows[next_show_index:]
+    return upcoming_shows, completed_shows
+
+
 def fetch_current_show(session):
     now_playing = session.query(NowPlaying).order_by(NowPlaying.time.desc(), NowPlaying.id.desc()).first()
     if now_playing is None:
@@ -31,6 +45,41 @@ def set_current_show(session, show_id):
     session.add(now_playing)
     # for fucks sake fuck pyramid/sqlalchemy
     session.flush()
+
+
+@view_config(route_name='shows', renderer='json')
+def shows(request):
+    upcoming_shows, completed_shows = fetch_all_shows(request.dbsession)
+    for show in (upcoming_shows + completed_shows):
+        # when models pose for presentation
+        show.formatted_time = show.time.strftime("%H:%M")
+        show.artists = (
+            show.artist.split("/")
+            if show.artist
+            else []
+        )
+    return {
+        'upcoming_shows': [
+            {
+                'artist': show.artist,
+                'artists': show.artists,
+                'name': show.name,
+                'description': show.description,
+                'time': show.formatted_time,
+            }
+            for show in upcoming_shows
+        ],
+        'completed_shows': [
+            {
+                'artist': show.artist,
+                'artists': show.artists,
+                'name': show.name,
+                'description': show.description,
+                'time': show.formatted_time,
+            }
+            for show in completed_shows
+        ],
+    }
 
 
 @view_config(route_name='current_show', renderer='json')

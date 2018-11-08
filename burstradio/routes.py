@@ -4,3 +4,4 @@ def includeme(config):
     config.add_route('selecta', '/selecta')
     config.add_route('now_playing', '/now_playing')
     config.add_route('current_show', '/current_show')
+    config.add_route('shows', '/shows')
