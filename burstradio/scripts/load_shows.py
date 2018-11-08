@@ -47,6 +47,10 @@ def iso_to_datetime(date, time):
 
 
 def load_row(row):
+    # Ignore empty rows
+    if not row['artist']:
+        return
+
     for key, value in row.items():
         row[key] = unicode(value, "utf-8")
 
