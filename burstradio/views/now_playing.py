@@ -28,8 +28,8 @@ def fetch_all_shows(session):
         if show.time < current_time:
             # This is the next show
             break
-    upcoming_shows = shows[next_show_index - 1:]
-    completed_shows = shows[:next_show_index - 1]
+    upcoming_shows = shows[next_show_index:]
+    completed_shows = shows[:next_show_index]
     return upcoming_shows, completed_shows
 
 
