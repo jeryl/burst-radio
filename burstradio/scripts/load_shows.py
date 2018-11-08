@@ -1,9 +1,8 @@
 import argparse
-import csv
-import datetime
 
 from burstradio.core import db
 from burstradio.models import Show
+from burstradio.util import data_loading
 
 
 def parse_args():
@@ -23,40 +22,11 @@ def parse_args():
     parser.add_argument('-v', '--verbose', action='store_true', help="Talk a lot.")
     args = parser.parse_args()
     assert args.program_csv
+    assert args.config_file
     return args
 
 
-
-def filter_dict_by_keys(dictionary, keys):
-    return {key: value for key, value in dictionary.iteritems() if key in keys}
-
-
-def iso_to_datetime(date, time):
-    print(date, time)
-    date_parts = [int(x) for x in date.split('-')]
-    time_parts = [int(x) for x in time.split(':')]
-    return datetime.datetime(
-        date_parts[0], # %Y
-        date_parts[1], # %m
-        date_parts[2], # %d
-        time_parts[0], # %H
-        time_parts[1], # %M
-        0, # %s
-        0, # %f
-    )
-
-
-def load_row(row):
-    # Ignore empty rows
-    if not row['artist']:
-        return
-
-    for key, value in row.items():
-        row[key] = unicode(value, "utf-8")
-
-    row['time'] = iso_to_datetime(row['date'], row['time'])
-    del row['date']
-
+def create_show(row):
     with db.transaction_session() as session:
         show = Show(
             time=row['time'],
@@ -65,6 +35,7 @@ def load_row(row):
             description=row['description'],
         )
         session.add(show)
+
 
 def dump_database():
     with db.transaction_session() as session:
@@ -82,13 +53,10 @@ def run():
     args = parse_args()
     db.initialize_db(args.config_file)
 
-    with open(args.program_csv) as program_csv_file:
-        reader = csv.DictReader(program_csv_file)
-        for row in reader:
-            load_row(row)
+    for row in data_loading.yield_program_csv_rows(args.program_csv):
+        create_show(row)
 
     dump_database()
-
 
 
 if __name__ == '__main__':
