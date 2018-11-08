@@ -22,7 +22,7 @@ def fetch_shows(session):
 def home_data(request, admin=False):
     return {
         'chat_channel': 'burstradio',
-        'stream_url': 'http://burstradio.yelpcorp.com:8000/burst',
+        'stream_url': 'http://burstradio.yelpcorp.com/stream',
         'shows': fetch_shows(request.dbsession),
         'admin': admin,
     }
