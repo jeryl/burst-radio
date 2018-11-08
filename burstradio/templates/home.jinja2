@@ -94,35 +94,42 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3 info">.
-                        {% for show in shows %}
-                            {% if not show.artists %}
-                                <hr>
-                                <div style="color: #aaaaaa">
-                            {% endif %}
-                            <h3 class="js-show-title">{{ show.formatted_time }} - {{ show.name }}</h3>
+                    <div class="col-md-6 col-md-offset-3 info">
+                        {% if not admin %}
+                            <h3>Upcoming Shows</h3>
+                            <div class="js-upcoming-shows"></div>
+                            <h3>Completed Shows</h3>
+                            <div class="js-completed-shows"></div>
+                        {% endif %}
+                        <!-- Show all shows normally in admin mode so we can select stuff -->
+                        {% if admin %}
+                            {% for show in shows %}
+                                {% if not show.artists %}
+                                    <hr>
+                                    <div style="color: #aaaaaa">
+                                {% endif %}
+                                <h3 class="js-show-title">{{ show.formatted_time }} - {{ show.name }}</h3>
 
-                            {% if show.artists %}
-                                {% for artist in show.artists %}
-                                <img style="width: 100px; height: 100px" src="{{ request.static_url('burstradio:static/photos/%s.jpg' % (artist,)) }}" />
-                                {% endfor %}
-                            {% endif %}
+                                {% if show.artists %}
+                                    {% for artist in show.artists %}
+                                    <img style="width: 100px; height: 100px" src="{{ request.static_url('burstradio:static/photos/%s.jpg' % (artist,)) }}" />
+                                    {% endfor %}
+                                {% endif %}
 
-                            <h4 class="js-show-artist">{{ show.artist }}</h4>
-                            <p class="show-description">{{ show.description }}</p>
+                                <h4 class="js-show-artist">{{ show.artist }}</h4>
+                                <p class="show-description">{{ show.description }}</p>
 
-                            {% if admin %}
                                 <form action="/current_show" method="post">
                                     <input type="hidden" name="show_id" value="{{ show.id }}" />
                                     <input class="btn btn-info" type="submit" value="Now playing" />
                                 </form>
-                            {% endif %}
 
-                            {% if not show.artists %}
-                                </div>
-                            <hr>
-                            {% endif %}
-                        {% endfor %}
+                                {% if not show.artists %}
+                                    </div>
+                                <hr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
