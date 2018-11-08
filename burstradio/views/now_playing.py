@@ -17,6 +17,7 @@ def fetch_all_shows(session):
     shows = session.query(Show).order_by(Show.time.desc(), Show.id.desc()).all()
     # Split shows into two parts: show all upcoming shows first, and then shows already completed.
     current_time = datetime.datetime.now()
+    next_show_index = 0
     for next_show_index in range(len(shows)):
         show = shows[next_show_index]
         if show.time < current_time:
