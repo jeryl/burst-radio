@@ -53,7 +53,10 @@ def shows(request):
     upcoming_shows, completed_shows = fetch_all_shows(request.dbsession)
     for show in (upcoming_shows + completed_shows):
         # when models pose for presentation
-        show.formatted_time = show.time.strftime("%H:%M")
+        show.formatted_time = '({} PT, {} CET)'.format(
+            show.time.strftime("%H:%M"),
+            (show.time + datetime.timedelta(hours=9)).strftime("%H:%M"),
+        )
         show.artists = (
             show.artist.split("/")
             if show.artist
