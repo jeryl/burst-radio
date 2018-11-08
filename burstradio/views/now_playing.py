@@ -1,4 +1,5 @@
 import datetime
+import os
 
 import transaction
 from burstradio.core import db
@@ -11,6 +12,10 @@ from sqlalchemy.exc import DBAPIError
 
 from ..models import NowPlaying
 from ..models import Show
+
+
+# used to signal show metadata for automatically cutting tracks during mp3 archival
+CURRENT_SHOW_FILE = '/nail/radio/data/protected/show.txt'
 
 
 def fetch_all_shows(session):
@@ -34,7 +39,11 @@ def fetch_current_show(session):
         print("not playing shit")
         return None
     # nice join you got there
-    return session.query(Show).filter(Show.id == now_playing.show_id).first()
+    return fetch_show(session, now_playing.show_id)
+
+
+def fetch_show(session, show_id):
+    return session.query(Show).filter(Show.id == show_id).first()
 
 
 def set_current_show(session, show_id):
@@ -46,6 +55,23 @@ def set_current_show(session, show_id):
     session.add(now_playing)
     # for fucks sake fuck pyramid/sqlalchemy
     session.flush()
+
+
+def sanitize_string(value):
+    return value.replace('\n', ' ').replace('\r', '')
+
+def write_show_info(session, show_id):
+    """Write show metadata to a file, using a format that streamripper
+    understands.
+    """
+    show = fetch_show(session, show_id)
+    directory = os.path.dirname(CURRENT_SHOW_FILE)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    with open(CURRENT_SHOW_FILE, 'w') as show_file:
+        sanitized_title = sanitize_string(show.name)
+        sanitized_artist = sanitize_string(show.artist)
+        show_file.write('TITLE=%s\nARTIST=%s' % (sanitized_title, sanitized_artist))
 
 
 @view_config(route_name='shows', renderer='json')
@@ -88,7 +114,9 @@ def shows(request):
 
 @view_config(route_name='current_show', renderer='json')
 def current_show(request):
-    set_current_show(request.dbsession, int(request.POST['show_id']))
+    show_id = int(request.POST['show_id'])
+    set_current_show(request.dbsession, show_id)
+    write_show_info(request.dbsession, show_id)
     return HTTPFound(location=request.route_url('selecta'))
 
 
