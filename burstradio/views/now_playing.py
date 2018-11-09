@@ -58,7 +58,7 @@ def set_current_show(session, show_id):
 
 
 def sanitize_string(value):
-    return value.replace('\n', ' ').replace('\r', '')
+    return value.encode('ascii', 'ignore').replace('\n', ' ').replace('\r', '')
 
 def write_show_info(session, show_id):
     """Write show metadata to a file, using a format that streamripper
