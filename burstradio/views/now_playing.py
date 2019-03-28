@@ -79,9 +79,11 @@ def shows(request):
     upcoming_shows, completed_shows = fetch_all_shows(request.dbsession)
     for show in (upcoming_shows + completed_shows):
         # when models pose for presentation
-        show.formatted_time = '({} PT, {} CET)'.format(
+        # TODO: should use pytz so we don't have to change this every time daylight savings changes lol
+        show.formatted_time = '({} PT, {} CET, {} GMT)'.format(
             show.time.strftime("%H:%M"),
-            (show.time + datetime.timedelta(hours=9)).strftime("%H:%M"),
+            (show.time + datetime.timedelta(hours=8)).strftime("%H:%M"),
+            (show.time + datetime.timedelta(hours=7)).strftime("%H:%M"),
         )
         show.artists = (
             show.artist.split("/")
