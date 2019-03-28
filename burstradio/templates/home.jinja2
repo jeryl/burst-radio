@@ -108,7 +108,8 @@
                                     <hr>
                                     <div style="color: #aaaaaa">
                                 {% endif %}
-                                <h3 class="js-show-title">{{ show.formatted_time }} - {{ show.name }}</h3>
+                                <h3 class="js-show-title">{{ show.name }}</h3>
+                                <p class="show-description">{{ show.formatted_time }}</p>
 
                                 {% if show.artists %}
                                     {% for artist in show.artists %}
