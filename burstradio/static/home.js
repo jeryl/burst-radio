@@ -32,8 +32,12 @@ function createShowNode(show) {
     var showNode = $('<div>');
 
     var title =  $('<h3 class="js-show-title">');
-    title.text(show.time + ' - ' + show.name);
+    title.text(show.name);
     showNode.append(title);
+
+    var time = $('<p class="show-description">');
+    time.text(show.time);
+    showNode.append(time);
 
     for (var i = 0; i < show.artists.length; i++) {
         var img = $('<img style="width: 100px; height: 100px" />');
